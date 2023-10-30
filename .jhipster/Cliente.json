@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20231030191518",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "cliente",
+  "fields": [
+    {
+      "fieldName": "dni",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroCompras",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tier",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Cliente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

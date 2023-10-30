@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20231030191519",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "venta",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "tipoPago",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "total",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Venta",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "coche",
+      "ownerSide": true,
+      "relationshipName": "coches",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "empleado",
+      "relationshipName": "empleado",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "cliente",
+      "relationshipName": "cliente",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

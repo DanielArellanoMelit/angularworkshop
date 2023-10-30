@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20231030191521",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "coche",
+  "fields": [
+    {
+      "fieldName": "marca",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modelo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "color",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroSerie",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "exposicion",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Coche",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

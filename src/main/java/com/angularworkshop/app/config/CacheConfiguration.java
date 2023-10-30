@@ -48,6 +48,10 @@ public class CacheConfiguration {
             createCache(cm, com.angularworkshop.app.domain.User.class.getName());
             createCache(cm, com.angularworkshop.app.domain.Authority.class.getName());
             createCache(cm, com.angularworkshop.app.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.angularworkshop.app.domain.Cliente.class.getName());
+            createCache(cm, com.angularworkshop.app.domain.Venta.class.getName());
+            createCache(cm, com.angularworkshop.app.domain.Empleado.class.getName());
+            createCache(cm, com.angularworkshop.app.domain.Coche.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
