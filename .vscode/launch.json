@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AngularworkshopApp<angularworkshop>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.angularworkshop.app.AngularworkshopApp",
+            "projectName": "angularworkshop",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
