@@ -3,6 +3,7 @@ package com.angularworkshop.app.web.rest;
 import com.angularworkshop.app.repository.VentaRepository;
 import com.angularworkshop.app.service.VentaService;
 import com.angularworkshop.app.service.dto.VentaDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -140,12 +141,16 @@ public class VentaResource {
      * {@code GET  /ventas} : get all the ventas.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ventas in body.
      */
     @GetMapping("/ventas")
-    public ResponseEntity<List<VentaDTO>> getAllVentas(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<VentaDTO>> getAllVentas(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        FilterHelper filter
+    ) {
         log.debug("REST request to get a page of Ventas");
-        Page<VentaDTO> page = ventaService.findAll(pageable);
+        Page<VentaDTO> page = ventaService.findAll(pageable, filter);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

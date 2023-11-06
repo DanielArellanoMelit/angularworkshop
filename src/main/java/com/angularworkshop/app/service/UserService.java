@@ -5,10 +5,12 @@ import com.angularworkshop.app.domain.Authority;
 import com.angularworkshop.app.domain.User;
 import com.angularworkshop.app.repository.AuthorityRepository;
 import com.angularworkshop.app.repository.UserRepository;
+import com.angularworkshop.app.repository.specification.UserSpecification;
 import com.angularworkshop.app.security.AuthoritiesConstants;
 import com.angularworkshop.app.security.SecurityUtils;
 import com.angularworkshop.app.service.dto.AdminUserDTO;
 import com.angularworkshop.app.service.dto.UserDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -272,8 +274,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AdminUserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(AdminUserDTO::new);
+    public Page<AdminUserDTO> getAllManagedUsers(Pageable pageable, FilterHelper filter) {
+        return userRepository.findAll(UserSpecification.busquedaUsers(filter), pageable).map(AdminUserDTO::new);
     }
 
     @Transactional(readOnly = true)

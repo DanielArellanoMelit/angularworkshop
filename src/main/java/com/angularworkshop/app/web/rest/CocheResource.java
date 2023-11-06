@@ -3,6 +3,7 @@ package com.angularworkshop.app.web.rest;
 import com.angularworkshop.app.repository.CocheRepository;
 import com.angularworkshop.app.service.CocheService;
 import com.angularworkshop.app.service.dto.CocheDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -140,12 +141,16 @@ public class CocheResource {
      * {@code GET  /coches} : get all the coches.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of coches in body.
      */
     @GetMapping("/coches")
-    public ResponseEntity<List<CocheDTO>> getAllCoches(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<CocheDTO>> getAllCoches(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        FilterHelper filter
+    ) {
         log.debug("REST request to get a page of Coches");
-        Page<CocheDTO> page = cocheService.findAll(pageable);
+        Page<CocheDTO> page = cocheService.findAll(pageable, filter);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -7,13 +7,13 @@ import com.angularworkshop.app.security.AuthoritiesConstants;
 import com.angularworkshop.app.service.MailService;
 import com.angularworkshop.app.service.UserService;
 import com.angularworkshop.app.service.dto.AdminUserDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.web.rest.errors.BadRequestAlertException;
 import com.angularworkshop.app.web.rest.errors.EmailAlreadyUsedException;
 import com.angularworkshop.app.web.rest.errors.LoginAlreadyUsedException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.Collections;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import org.slf4j.Logger;
@@ -161,17 +161,21 @@ public class UserResource {
      * {@code GET /admin/users} : get all users with all the details - calling this are only allowed for the administrators.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<AdminUserDTO>> getAllUsers(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<AdminUserDTO>> getAllUsers(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        FilterHelper filter
+    ) {
         log.debug("REST request to get all User for an admin");
         if (!onlyContainsAllowedProperties(pageable)) {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
+        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable, filter);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

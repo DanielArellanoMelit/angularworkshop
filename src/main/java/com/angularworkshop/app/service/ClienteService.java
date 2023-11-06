@@ -1,6 +1,7 @@
 package com.angularworkshop.app.service;
 
 import com.angularworkshop.app.service.dto.ClienteDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,9 +38,10 @@ public interface ClienteService {
      * Get all the clientes.
      *
      * @param pageable the pagination information.
+     * @param filtro search filter
      * @return the list of entities.
      */
-    Page<ClienteDTO> findAll(Pageable pageable);
+    Page<ClienteDTO> findAll(Pageable pageable, FilterHelper filtro);
 
     /**
      * Get the "id" cliente.

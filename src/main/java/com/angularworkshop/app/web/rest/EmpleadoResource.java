@@ -3,6 +3,7 @@ package com.angularworkshop.app.web.rest;
 import com.angularworkshop.app.repository.EmpleadoRepository;
 import com.angularworkshop.app.service.EmpleadoService;
 import com.angularworkshop.app.service.dto.EmpleadoDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -140,12 +141,16 @@ public class EmpleadoResource {
      * {@code GET  /empleados} : get all the empleados.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of empleados in body.
      */
     @GetMapping("/empleados")
-    public ResponseEntity<List<EmpleadoDTO>> getAllEmpleados(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<EmpleadoDTO>> getAllEmpleados(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        FilterHelper filter
+    ) {
         log.debug("REST request to get a page of Empleados");
-        Page<EmpleadoDTO> page = empleadoService.findAll(pageable);
+        Page<EmpleadoDTO> page = empleadoService.findAll(pageable, filter);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

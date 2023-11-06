@@ -2,8 +2,10 @@ package com.angularworkshop.app.service.impl;
 
 import com.angularworkshop.app.domain.Empleado;
 import com.angularworkshop.app.repository.EmpleadoRepository;
+import com.angularworkshop.app.repository.specification.EmpleadoSpecification;
 import com.angularworkshop.app.service.EmpleadoService;
 import com.angularworkshop.app.service.dto.EmpleadoDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.service.mapper.EmpleadoMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -64,9 +66,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<EmpleadoDTO> findAll(Pageable pageable) {
+    public Page<EmpleadoDTO> findAll(Pageable pageable, FilterHelper filter) {
         log.debug("Request to get all Empleados");
-        return empleadoRepository.findAll(pageable).map(empleadoMapper::toDto);
+        return empleadoRepository.findAll(EmpleadoSpecification.busquedaEmpleados(filter), pageable).map(empleadoMapper::toDto);
     }
 
     @Override

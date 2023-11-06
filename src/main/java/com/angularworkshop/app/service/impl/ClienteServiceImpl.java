@@ -2,8 +2,10 @@ package com.angularworkshop.app.service.impl;
 
 import com.angularworkshop.app.domain.Cliente;
 import com.angularworkshop.app.repository.ClienteRepository;
+import com.angularworkshop.app.repository.specification.ClienteSpecification;
 import com.angularworkshop.app.service.ClienteService;
 import com.angularworkshop.app.service.dto.ClienteDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.service.mapper.ClienteMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -64,9 +66,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ClienteDTO> findAll(Pageable pageable) {
+    public Page<ClienteDTO> findAll(Pageable pageable, FilterHelper filtro) {
         log.debug("Request to get all Clientes");
-        return clienteRepository.findAll(pageable).map(clienteMapper::toDto);
+        return clienteRepository.findAll(ClienteSpecification.busquedaClientes(filtro), pageable).map(clienteMapper::toDto);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.angularworkshop.app.service;
 
 import com.angularworkshop.app.service.dto.VentaDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,9 +38,10 @@ public interface VentaService {
      * Get all the ventas.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the list of entities.
      */
-    Page<VentaDTO> findAll(Pageable pageable);
+    Page<VentaDTO> findAll(Pageable pageable, FilterHelper filter);
 
     /**
      * Get the "id" venta.

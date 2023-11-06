@@ -2,8 +2,10 @@ package com.angularworkshop.app.service.impl;
 
 import com.angularworkshop.app.domain.Venta;
 import com.angularworkshop.app.repository.VentaRepository;
+import com.angularworkshop.app.repository.specification.VentaSpecification;
 import com.angularworkshop.app.service.VentaService;
 import com.angularworkshop.app.service.dto.VentaDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.service.mapper.VentaMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -64,9 +66,9 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<VentaDTO> findAll(Pageable pageable) {
+    public Page<VentaDTO> findAll(Pageable pageable, FilterHelper filter) {
         log.debug("Request to get all Ventas");
-        return ventaRepository.findAll(pageable).map(ventaMapper::toDto);
+        return ventaRepository.findAll(VentaSpecification.busquedaVentas(filter), pageable).map(ventaMapper::toDto);
     }
 
     @Override

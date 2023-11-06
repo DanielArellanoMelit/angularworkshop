@@ -2,8 +2,10 @@ package com.angularworkshop.app.service.impl;
 
 import com.angularworkshop.app.domain.Coche;
 import com.angularworkshop.app.repository.CocheRepository;
+import com.angularworkshop.app.repository.specification.CocheSpecification;
 import com.angularworkshop.app.service.CocheService;
 import com.angularworkshop.app.service.dto.CocheDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.service.mapper.CocheMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -64,9 +66,9 @@ public class CocheServiceImpl implements CocheService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CocheDTO> findAll(Pageable pageable) {
+    public Page<CocheDTO> findAll(Pageable pageable, FilterHelper filter) {
         log.debug("Request to get all Coches");
-        return cocheRepository.findAll(pageable).map(cocheMapper::toDto);
+        return cocheRepository.findAll(CocheSpecification.busquedaCoches(filter), pageable).map(cocheMapper::toDto);
     }
 
     @Override

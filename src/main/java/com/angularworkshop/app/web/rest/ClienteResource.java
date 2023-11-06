@@ -3,6 +3,7 @@ package com.angularworkshop.app.web.rest;
 import com.angularworkshop.app.repository.ClienteRepository;
 import com.angularworkshop.app.service.ClienteService;
 import com.angularworkshop.app.service.dto.ClienteDTO;
+import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -140,12 +141,16 @@ public class ClienteResource {
      * {@code GET  /clientes} : get all the clientes.
      *
      * @param pageable the pagination information.
+     * @param filter search filter.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientes in body.
      */
     @GetMapping("/clientes")
-    public ResponseEntity<List<ClienteDTO>> getAllClientes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<ClienteDTO>> getAllClientes(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        FilterHelper filter
+    ) {
         log.debug("REST request to get a page of Clientes");
-        Page<ClienteDTO> page = clienteService.findAll(pageable);
+        Page<ClienteDTO> page = clienteService.findAll(pageable, filter);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
