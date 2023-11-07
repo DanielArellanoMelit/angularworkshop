@@ -147,7 +147,7 @@ public class CocheResource {
     @GetMapping("/coches")
     public ResponseEntity<List<CocheDTO>> getAllCoches(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        FilterHelper filter
+        @org.springdoc.api.annotations.ParameterObject FilterHelper filter
     ) {
         log.debug("REST request to get a page of Coches");
         Page<CocheDTO> page = cocheService.findAll(pageable, filter);

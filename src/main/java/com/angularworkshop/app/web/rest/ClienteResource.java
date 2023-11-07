@@ -147,7 +147,7 @@ public class ClienteResource {
     @GetMapping("/clientes")
     public ResponseEntity<List<ClienteDTO>> getAllClientes(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        FilterHelper filter
+        @org.springdoc.api.annotations.ParameterObject FilterHelper filter
     ) {
         log.debug("REST request to get a page of Clientes");
         Page<ClienteDTO> page = clienteService.findAll(pageable, filter);

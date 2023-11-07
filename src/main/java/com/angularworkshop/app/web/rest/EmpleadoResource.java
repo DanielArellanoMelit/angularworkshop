@@ -147,7 +147,7 @@ public class EmpleadoResource {
     @GetMapping("/empleados")
     public ResponseEntity<List<EmpleadoDTO>> getAllEmpleados(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        FilterHelper filter
+        @org.springdoc.api.annotations.ParameterObject FilterHelper filter
     ) {
         log.debug("REST request to get a page of Empleados");
         Page<EmpleadoDTO> page = empleadoService.findAll(pageable, filter);

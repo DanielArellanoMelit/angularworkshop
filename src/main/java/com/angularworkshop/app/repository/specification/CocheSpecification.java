@@ -36,7 +36,6 @@ public interface CocheSpecification {
                 Expression<String> modelo = coche.get("modelo").as(String.class);
                 Expression<String> color = coche.get("color").as(String.class);
                 Expression<String> numeroSerie = coche.get("numeroSerie").as(String.class);
-                Expression<Boolean> isActive = criteriaBuilder.isTrue(coche.get("exposicion"));
 
                 if (null != busquedaListado) {
                     for (int i = 0; i < busquedaListado.length; i++) {
@@ -54,7 +53,14 @@ public interface CocheSpecification {
 
                 query.distinct(true);
 
-                return criteriaBuilder.and(criteriaBuilder.and(organizador.toArray(new Predicate[] {})), isActive);
+                Predicate result = criteriaBuilder.and(organizador.toArray(new Predicate[] {}));
+
+                if (null != filtro && null != filtro.getActivated()) {
+                    Predicate isActive = criteriaBuilder.equal(coche.get("exposicion").as(Boolean.class), filtro.getActivated());
+                    result = criteriaBuilder.and(result, isActive);
+                }
+
+                return result;
             }
         };
     }

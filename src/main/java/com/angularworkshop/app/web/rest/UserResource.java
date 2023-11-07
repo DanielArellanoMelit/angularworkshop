@@ -168,7 +168,7 @@ public class UserResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<AdminUserDTO>> getAllUsers(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        FilterHelper filter
+        @org.springdoc.api.annotations.ParameterObject FilterHelper filter
     ) {
         log.debug("REST request to get all User for an admin");
         if (!onlyContainsAllowedProperties(pageable)) {

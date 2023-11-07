@@ -39,7 +39,6 @@ public interface UserSpecification {
                 Expression<String> name = user.get("firstName").as(String.class);
                 Expression<String> apellido = user.get("lastName").as(String.class);
                 Expression<String> mail = user.get("email").as(String.class);
-                Expression<Boolean> activado = criteriaBuilder.isTrue(user.get("activated"));
 
                 Expression<String> authorityString = authority.get("name").as(String.class);
 
@@ -62,7 +61,14 @@ public interface UserSpecification {
 
                 query.distinct(true);
 
-                return criteriaBuilder.and(criteriaBuilder.and(organizador.toArray(new Predicate[] {})), activado);
+                Predicate result = criteriaBuilder.and(organizador.toArray(new Predicate[] {}));
+
+                if (null != filtro && null != filtro.getActivated()) {
+                    Predicate isActive = criteriaBuilder.equal(user.get("activated").as(Boolean.class), filtro.getActivated());
+                    result = criteriaBuilder.and(result, isActive);
+                }
+
+                return result;
             }
         };
     }

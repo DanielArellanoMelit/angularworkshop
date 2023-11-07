@@ -147,7 +147,7 @@ public class VentaResource {
     @GetMapping("/ventas")
     public ResponseEntity<List<VentaDTO>> getAllVentas(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        FilterHelper filter
+        @org.springdoc.api.annotations.ParameterObject FilterHelper filter
     ) {
         log.debug("REST request to get a page of Ventas");
         Page<VentaDTO> page = ventaService.findAll(pageable, filter);

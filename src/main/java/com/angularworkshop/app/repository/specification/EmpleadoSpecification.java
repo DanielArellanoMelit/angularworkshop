@@ -34,7 +34,6 @@ public interface EmpleadoSpecification {
 
                 Expression<String> dni = empleado.get("dni").as(String.class);
                 Expression<String> nombre = empleado.get("nombre").as(String.class);
-                Expression<Boolean> isActive = criteriaBuilder.isTrue(empleado.get("activo"));
 
                 if (null != busquedaListado) {
                     for (int i = 0; i < busquedaListado.length; i++) {
@@ -50,7 +49,14 @@ public interface EmpleadoSpecification {
 
                 query.distinct(true);
 
-                return criteriaBuilder.and(criteriaBuilder.and(organizador.toArray(new Predicate[] {})), isActive);
+                Predicate result = criteriaBuilder.and(organizador.toArray(new Predicate[] {}));
+
+                if (null != filtro && null != filtro.getActivated()) {
+                    Predicate isActive = criteriaBuilder.equal(empleado.get("activo").as(Boolean.class), filtro.getActivated());
+                    result = criteriaBuilder.and(result, isActive);
+                }
+
+                return result;
             }
         };
     }
