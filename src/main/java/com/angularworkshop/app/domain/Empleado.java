@@ -1,5 +1,6 @@
 package com.angularworkshop.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
@@ -17,7 +18,6 @@ public class Empleado implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -33,7 +33,11 @@ public class Empleado implements Serializable {
     @Column(name = "numero_ventas")
     private Integer numeroVentas;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId
+    @JsonIgnoreProperties(value = { "empleado" }, allowSetters = true)
+    private User user;
 
     public Long getId() {
         return this.id;
@@ -100,7 +104,22 @@ public class Empleado implements Serializable {
         this.numeroVentas = numeroVentas;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Empleado() {}
+
+    public Empleado(User user) {
+        this.setUser(user);
+        this.setNombre(user.getLogin());
+        this.setNumeroVentas(0);
+        this.setActivo(true);
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,7 @@ package com.angularworkshop.app.service;
 
 import com.angularworkshop.app.config.Constants;
 import com.angularworkshop.app.domain.Authority;
+import com.angularworkshop.app.domain.Empleado;
 import com.angularworkshop.app.domain.User;
 import com.angularworkshop.app.repository.AuthorityRepository;
 import com.angularworkshop.app.repository.UserRepository;
@@ -174,6 +175,8 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        Empleado empleado = new Empleado(user);
+        user.setEmpleado(empleado);
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
