@@ -183,4 +183,28 @@ public class CocheResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /coches} : get all the coches where Exposicion is true.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of coches in body.
+     */
+    @GetMapping("/coches/exposicion-true")
+    public ResponseEntity<List<CocheDTO>> findAllByExposicionTrue() {
+        log.debug("REST request to get a page of Coches where exposicion is true");
+        List<CocheDTO> coches = cocheService.findAllByExposicionTrue();
+        return ResponseEntity.ok().body(coches);
+    }
+
+    /**
+     * {@code GET  /coches} : get all the coches where Exposicion is false.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of coches in body.
+     */
+    @GetMapping("/coches/exposicion-false")
+    public ResponseEntity<List<CocheDTO>> findAllByExposicionFalse() {
+        log.debug("REST request to get a list of Coches where exposicion is false");
+        List<CocheDTO> coches = cocheService.findAllByExposicionFalse();
+        return ResponseEntity.ok().body(coches);
+    }
 }

@@ -1,6 +1,7 @@
 package com.angularworkshop.app.repository;
 
 import com.angularworkshop.app.domain.Coche;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,8 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface CocheRepository extends JpaRepository<Coche, Long>, JpaSpecificationExecutor<Coche> {}
+public interface CocheRepository extends JpaRepository<Coche, Long>, JpaSpecificationExecutor<Coche> {
+    List<Coche> findAllByExposicionTrue();
+
+    List<Coche> findAllByExposicionFalse();
+}

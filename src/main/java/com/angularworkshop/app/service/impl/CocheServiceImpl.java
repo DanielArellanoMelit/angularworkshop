@@ -7,7 +7,10 @@ import com.angularworkshop.app.service.CocheService;
 import com.angularworkshop.app.service.dto.CocheDTO;
 import com.angularworkshop.app.service.helper.FilterHelper;
 import com.angularworkshop.app.service.mapper.CocheMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -82,5 +85,19 @@ public class CocheServiceImpl implements CocheService {
     public void delete(Long id) {
         log.debug("Request to delete Coche : {}", id);
         cocheRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CocheDTO> findAllByExposicionTrue() {
+        log.debug("Request to get all Coches where exposicion is true");
+        return cocheRepository.findAllByExposicionTrue().stream().map(cocheMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CocheDTO> findAllByExposicionFalse() {
+        log.debug("Request to get all Coches where exposicion is false");
+        return cocheRepository.findAllByExposicionFalse().stream().map(cocheMapper::toDto).collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package com.angularworkshop.app.service;
 
 import com.angularworkshop.app.service.dto.CocheDTO;
 import com.angularworkshop.app.service.helper.FilterHelper;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,4 +58,18 @@ public interface CocheService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the coches where Exposicion is true.
+     *
+     * @return the list of entities.
+     */
+    List<CocheDTO> findAllByExposicionTrue();
+
+    /**
+     * Get all the coches where Exposicion is False.
+     *
+     * @return the list of entities.
+     */
+    List<CocheDTO> findAllByExposicionFalse();
 }
