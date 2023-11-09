@@ -35,6 +35,7 @@ public class CocheServiceImpl implements CocheService {
     public CocheDTO save(CocheDTO cocheDTO) {
         log.debug("Request to save Coche : {}", cocheDTO);
         Coche coche = cocheMapper.toEntity(cocheDTO);
+        coche.setExposicion(true);
         coche = cocheRepository.save(coche);
         return cocheMapper.toDto(coche);
     }

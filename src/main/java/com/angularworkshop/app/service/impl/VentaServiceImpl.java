@@ -1,6 +1,8 @@
 package com.angularworkshop.app.service.impl;
 
+import com.angularworkshop.app.domain.Coche;
 import com.angularworkshop.app.domain.Venta;
+import com.angularworkshop.app.repository.CocheRepository;
 import com.angularworkshop.app.repository.VentaRepository;
 import com.angularworkshop.app.service.VentaService;
 import com.angularworkshop.app.service.dto.VentaDTO;
@@ -26,9 +28,12 @@ public class VentaServiceImpl implements VentaService {
 
     private final VentaMapper ventaMapper;
 
-    public VentaServiceImpl(VentaRepository ventaRepository, VentaMapper ventaMapper) {
+    private final CocheRepository cocheRepository;
+
+    public VentaServiceImpl(VentaRepository ventaRepository, VentaMapper ventaMapper, CocheRepository cocheRepository) {
         this.ventaRepository = ventaRepository;
         this.ventaMapper = ventaMapper;
+        this.cocheRepository = cocheRepository;
     }
 
     @Override
@@ -36,6 +41,11 @@ public class VentaServiceImpl implements VentaService {
         log.debug("Request to save Venta : {}", ventaDTO);
         Venta venta = ventaMapper.toEntity(ventaDTO);
         venta = ventaRepository.save(venta);
+        Coche coche = venta.getCoches();
+        if (null != coche) {
+            coche.setExposicion(false);
+            cocheRepository.save(coche);
+        }
         return ventaMapper.toDto(venta);
     }
 
@@ -44,6 +54,11 @@ public class VentaServiceImpl implements VentaService {
         log.debug("Request to update Venta : {}", ventaDTO);
         Venta venta = ventaMapper.toEntity(ventaDTO);
         venta = ventaRepository.save(venta);
+        Coche coche = venta.getCoches();
+        if (null != coche) {
+            coche.setExposicion(false);
+            cocheRepository.save(coche);
+        }
         return ventaMapper.toDto(venta);
     }
 
