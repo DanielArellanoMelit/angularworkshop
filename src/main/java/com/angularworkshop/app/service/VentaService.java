@@ -57,4 +57,13 @@ public interface VentaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the ventas by empleado.
+     *
+     * @param pageable the pagination information.
+     * @param userLogin login user.
+     * @return the list of entities.
+     */
+    Page<VentaDTO> findAllByEmpleadoUserLogin(Pageable pageable, String userLogin);
 }

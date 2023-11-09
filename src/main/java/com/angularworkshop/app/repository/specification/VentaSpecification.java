@@ -87,9 +87,19 @@ public interface VentaSpecification {
                     }
                 }
 
+                Predicate result = criteriaBuilder.and(organizador.toArray(new Predicate[] {}));
+
+                if (null != filtro && null != filtro.getFechaInicio() && null != filtro.getFechaFin()) {
+                    result =
+                        criteriaBuilder.and(
+                            result,
+                            criteriaBuilder.between(venta.get("fecha"), filtro.getFechaInicio(), filtro.getFechaFin())
+                        );
+                }
+
                 query.distinct(true);
 
-                return criteriaBuilder.and(organizador.toArray(new Predicate[] {}));
+                return result;
             }
         };
     }

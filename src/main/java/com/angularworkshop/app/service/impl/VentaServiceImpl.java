@@ -98,4 +98,11 @@ public class VentaServiceImpl implements VentaService {
         log.debug("Request to delete Venta : {}", id);
         ventaRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VentaDTO> findAllByEmpleadoUserLogin(Pageable pageable, String userLogin) {
+        log.debug("Request to get all Ventas");
+        return ventaRepository.findAllByEmpleadoUserLogin(pageable, userLogin).map(ventaMapper::toDto);
+    }
 }

@@ -183,4 +183,22 @@ public class VentaResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /ventas} : get all the ventas by userLogin.
+     *
+     * @param pageable the pagination information.
+     * @param userLogin search filter.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ventas in body.
+     */
+    @GetMapping("/ventas/empleado-login/{userLogin}")
+    public ResponseEntity<List<VentaDTO>> getAllVentasByUserLogin(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @org.springdoc.api.annotations.ParameterObject @PathVariable String userLogin
+    ) {
+        log.debug("REST request to get a page of Ventas by userLogin");
+        Page<VentaDTO> page = ventaService.findAllByEmpleadoUserLogin(pageable, userLogin);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }
